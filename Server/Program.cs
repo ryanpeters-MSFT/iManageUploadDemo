@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http.Features;
+
 internal class Program
 {
     private static void Main(string[] args)
@@ -8,6 +10,11 @@ internal class Program
 
         builder.Services.AddControllers();
         builder.Services.AddHttpClient();
+
+        builder.Services.Configure<FormOptions>(f =>
+        {
+            f.MultipartBodyLengthLimit = long.MaxValue;
+        });
 
         var app = builder.Build();
 

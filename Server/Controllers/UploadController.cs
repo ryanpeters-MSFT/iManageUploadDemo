@@ -3,22 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 namespace Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class UploadController : ControllerBase
     {
         [HttpPost]
-        [Route("file")]
+        [Route("upload")]
         [RequestSizeLimit(8000000000)]
-        public object UploadFile()
+        public async Task<object> UploadFile()
         {
-            var text = Request.Form["Text"].ToString();
+            var filePath = @$"C:\Users\Administrator\Desktop\{Guid.NewGuid()}.dat";
 
-            return new
+            using (var file = System.IO.File.OpenWrite(filePath))
             {
-                text,
-                files = Request.Form.Files.Count,
-                size = Request.Form.Files[0].Length
-            };
+                await Request.Body.CopyToAsync(file);
+            }
+
+            return true;
         }
     }
 }
