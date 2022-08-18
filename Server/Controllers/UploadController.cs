@@ -10,7 +10,7 @@ namespace Server.Controllers
         [RequestSizeLimit(8000000000)]
         public async Task<object> UploadFile()
         {
-            var filePath = @$"C:\Users\Administrator\Desktop\{Guid.NewGuid()}.dat";
+            var filePath = $"{Guid.NewGuid()}.dat";
 
             using (var file = System.IO.File.OpenWrite(filePath))
             {
